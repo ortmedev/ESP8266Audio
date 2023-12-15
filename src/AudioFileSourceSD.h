@@ -40,7 +40,7 @@ class AudioFileSourceSD : public AudioFileSource
     virtual uint32_t getSize() override;
     virtual uint32_t getPos() override;
 
-  private:
+  protected:
     File f;
 };
 
