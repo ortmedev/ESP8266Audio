@@ -129,6 +129,7 @@ bool AudioOutputI2S::SetPinout(int bclk, int wclk, int dout, int mclk)
 bool AudioOutputI2S::SetRate(int hz)
 {
   // TODO - have a list of allowable rates from constructor, check them
+  if (rateSet && this->hertz == hz) return true;
   this->hertz = hz;
   if (i2sOn)
   {
@@ -140,6 +141,7 @@ bool AudioOutputI2S::SetRate(int hz)
       i2s.setFrequency(hz);
   #endif
   }
+  rateSet = true;
   return true;
 }
 
@@ -252,7 +254,8 @@ bool AudioOutputI2S::begin(bool txDAC)
 
       i2s_config_t i2s_config_dac = {
           .mode = mode,
-          .sample_rate = 44100,
+          // .sample_rate = 44100,
+          .sample_rate = 22050,
           .bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,
           .channel_format = I2S_CHANNEL_FMT_RIGHT_LEFT,
           .communication_format = comm_fmt,

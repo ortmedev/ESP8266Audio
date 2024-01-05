@@ -260,6 +260,10 @@ bool AudioGeneratorWAV::ReadWAVInfo()
   availBytes = u32;
 
   // Now set up the buffer or fail
+  if (buff) {
+    free(buff);
+    buff = NULL;
+  }
   buff = reinterpret_cast<uint8_t *>(malloc(buffSize));
   if (!buff) {
     Serial.printf_P(PSTR("AudioGeneratorWAV::ReadWAVInfo: cannot read WAV, failed to set up buffer \n"));
