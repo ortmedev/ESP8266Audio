@@ -395,7 +395,7 @@ bool AudioOutputI2S::stop()
     return false;
 
   #ifdef ESP32
-    i2s_zero_dma_buffer((i2s_port_t)portNo);
+    // i2s_zero_dma_buffer((i2s_port_t)portNo);
     audioLogger->printf("UNINSTALL I2S\n");
     i2s_driver_uninstall((i2s_port_t)portNo); //stop & destroy i2s driver
   #elif defined(ESP8266)
