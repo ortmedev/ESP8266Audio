@@ -19,10 +19,13 @@
 */
 
 #include <Arduino.h>
-#ifdef ESP8266
-#include <ESP8266WiFi.h>
+#if defined(ARDUINO_ARCH_RP2040)
+// Nothing here
 #else
-#include <WiFi.h>
+#ifdef ESP32
+    #include <WiFi.h>
+#else
+    #include <ESP8266WiFi.h>
 #endif
 #include "web.h"
 
@@ -308,3 +311,4 @@ void Read4Int(char *str, byte *p)
   str += ParseInt(str, &i); p[2] = i; if (*str) str++;
   str += ParseInt(str, &i); p[3] = i;
 }
+#endif
