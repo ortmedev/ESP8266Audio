@@ -1,12 +1,12 @@
 #include <Arduino.h>
 #include "AudioFileSourcePROGMEM.h"
 #include "AudioGeneratorMOD.h"
-#include "AudioOutputPWM.h"
+#include "AudioOutputPDM.h"
 
-#if !defined(ARDUINO_ARCH_RP2040)
+#if defined(ESP8266) || defined(ARDUINO_ARCH_RP2040)
 void setup() {
   Serial.begin(115200);
-  Serial.printf("Only for the RP2040/Raspberry Pi Pico\n");
+  Serial.printf("Only for the ESP32\n");
 }
 
 void loop() {
@@ -18,7 +18,7 @@ void loop() {
 
 AudioGeneratorMOD *mod;
 AudioFileSourcePROGMEM *file;
-AudioOutputPWM *out;
+AudioOutputPDM *out;
 
 void setup() {
   Serial.begin(115200);
@@ -26,7 +26,7 @@ void setup() {
 
   audioLogger = &Serial;
   file = new AudioFileSourcePROGMEM(steps_mod, sizeof(steps_mod));
-  out = new AudioOutputPWM();
+  out = new AudioOutputPDM(5 /* change to your PDM output pim*/);
   mod = new AudioGeneratorMOD();
   mod->SetBufferSize(3 * 1024);
   mod->SetSampleRate(44100);
